@@ -1,8 +1,8 @@
 import express from 'express';
-import data from './data';
 import mongoose from 'mongoose';
 import config from './config';
 import userRoute from './routes/userRoute';
+import productRoute from './routes/productRoute';
 
 const mongodbUrl = config.MONGODB_URL;
 mongoose.connect(mongodbUrl, {
@@ -14,17 +14,6 @@ mongoose.connect(mongodbUrl, {
 const app = express();
 app.use(express.json());
 app.use('/api/users', userRoute);
-app.get('/api/products/:id', (req, res) => {
-  const productId = req.params.id;
-  const product = data.products.find(product => product._id === productId);
-  if (product) {
-    res.send(product);
-  } else {
-    res.status(404).send({ msg: "Product Not Found" });
-  }
-});
-app.get('/api/products', (req, res) => {
-  res.send(data.products);
-});
+app.use('/api/products', productRoute);
 
 app.listen(config.PORT, () => { console.log("Server started at http://localhost:5000") })
