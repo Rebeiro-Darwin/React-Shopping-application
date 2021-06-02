@@ -18,7 +18,7 @@ function ProductScreen(props) {
     props.history.push("/cart/" + props.match.params.id + "?qty=" + qty);
   }
 
-  return <div>
+  return <>
     <div className="back-to-result">
       <Link to="/">Back to result</Link>
     </div>
@@ -68,7 +68,7 @@ function ProductScreen(props) {
         </div>)
     }
 
-  </div>
+  </>
 }
 
 export default ProductScreen;

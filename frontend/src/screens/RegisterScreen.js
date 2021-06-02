@@ -11,14 +11,13 @@ function RegisterScreen(props) {
   const userRegister = useSelector(state => state.userRegister);
   const { loading, userInfo, error } = userRegister;
   const dispatch = useDispatch();
+  const redirect = props.location.search ? props.location.search.split('=')[1] : "/";
 
   useEffect(() => {
     if (userInfo) {
-      props.history.push("/");
+      props.history.push(redirect);
     }
-    return () => {
-      //
-    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 
   const submitHandler = (e) => {
@@ -36,23 +35,16 @@ function RegisterScreen(props) {
           {error && <div>{error}</div>}
         </li>
         <li>
-          <label htmlFor="name">
-            Name
-          </label>
-          <input type="name" name="name" id="name" onChange={(e) => setName(e.target.value)}>
-          </input>
+          <label htmlFor="name">Name</label>
+          <input type="text" name="name" id="name" onChange={(e) => setName(e.target.value)}></input>
         </li>
         <li>
-          <label htmlFor="email">
-            Email
-          </label>
-          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}>
-          </input>
+          <label htmlFor="email">Email</label>
+          <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}></input>
         </li>
         <li>
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}>
-          </input>
+          <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}></input>
         </li>
         <li>
           <label htmlFor="rePassword">Re-Enter Password</label>
@@ -63,9 +55,8 @@ function RegisterScreen(props) {
           <button type="submit" className="button primary">Register</button>
         </li>
         <li>
-          Already have an account? <Link to="/signin">Sign-in</Link>
+          Already have an account? <Link to={redirect === '/' ? "signin" : "signin?redirect=" + redirect}>Sign-in</Link>
         </li>
-
       </ul>
     </form>
   </div>
